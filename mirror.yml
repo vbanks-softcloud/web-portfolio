@@ -1,4 +1,4 @@
-name: Mirror Repository to GitLab, Azure, and Bitbucket
+name: Mirror Repository to Azure devops repository
 
 on:
   push:
