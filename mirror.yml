@@ -1,0 +1,44 @@
+name: Mirror Repository to GitLab, Azure, and Bitbucket
+
+on:
+  push:
+    branches:
+      - master
+      - main
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      #
+      # --- Mirror to GitLab ---
+      #
+      - name: Mirror to GitLab
+        run: |
+          git remote add gitlab "https://oauth2:${GITLAB_TOKEN}@gitlab.com/vbanks.softcloud/terraform-basics-backup.git"
+          git push gitlab --all
+          git push gitlab --tags
+        env:
+          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+
+      #
+      # --- Mirror to Azure DevOps ---
+      #
+      - name: Mirror to Azure DevOps
+        env:
+          AZURE_PAT: ${{ secrets.AZURE_PAT }}
+        run: |
+          git remote add azure "https://vincecareer:${AZURE_PAT}@dev.azure.com/vincecareer/Terraform-basics-backup/_git/Terraform-basics-backup"
+          git push azure --all
+          git push azure --tags
+
+
+
+
+
