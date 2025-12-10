@@ -35,7 +35,12 @@
 						<header class="major">
 						<h2 class="hover-icon-container"><span class="ipsum-text">Ipsum<span class="hover-icon" data-gif="images/moving_clouds.gif"></span></span> asdasd asdasdasdasdlorem dolor aliquam ante commodo<br />
 						magna sed accumsan arcu neque.
-						<a href="#" id="resume-button" class="button resume-button-inline">Resume</a>
+						<div class="button-group-inline">
+							<a href="#" id="resume-button" class="button resume-button-inline">Resume</a>
+							<a href="#two" id="projects-button" class="button resume-button-inline">Projects</a>
+							<a href="#timeline" id="timeline-button" class="button resume-button-inline">Timeline</a>
+							<a href="#three" id="get-in-touch-button" class="button resume-button-inline">Get In Touch</a>
+						</div>
 						</h2>
 						</header>
 						<p>Accumsan orci faucibus id eu lorem semper. Eu ac iaculis ac nunc nisi lorem vulputate lorem neque cubilia ac in adipiscing in curae lobortis tortor primis integer massa adipiscing id nisi accumsan pellentesque commodo blandit enim arcu non at amet id arcu magna. Accumsan orci faucibus id eu lorem semper nunc nisi lorem vulputate lorem neque cubilia.</p>
@@ -462,11 +467,14 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
 			<script>
-				// Control GIF animation and Resume button
+				// Control GIF animation and buttons
 				window.addEventListener('load', function() {
 					const hoverIcon = document.querySelector('.hover-icon');
 					const ipsumText = document.querySelector('.ipsum-text');
 					const resumeButton = document.getElementById('resume-button');
+					const projectsButton = document.getElementById('projects-button');
+					const timelineButton = document.getElementById('timeline-button');
+					const getInTouchButton = document.getElementById('get-in-touch-button');
 					
 					if (hoverIcon) {
 						const gifSrc = hoverIcon.getAttribute('data-gif') || 'images/moving_clouds.gif';
@@ -497,6 +505,19 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 									}, 2000);
 								}
 								
+								// Function to add hover handlers to buttons
+								function addButtonHoverHandlers(button) {
+									if (button) {
+										button.addEventListener('mouseenter', function() {
+											hoverIcon.style.backgroundImage = 'url(' + gifSrc + '?t=' + Date.now() + ')';
+										});
+										
+										button.addEventListener('mouseleave', function() {
+											hoverIcon.style.backgroundImage = 'url(' + staticFrame + ')';
+										});
+									}
+								}
+								
 								// Animate on hover (if ipsumText exists)
 								if (ipsumText) {
 									ipsumText.addEventListener('mouseenter', function() {
@@ -508,24 +529,57 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 									});
 								}
 								
-								// Resume button handlers
+								// Add hover handlers to all buttons
+								addButtonHoverHandlers(resumeButton);
+								addButtonHoverHandlers(projectsButton);
+								addButtonHoverHandlers(timelineButton);
+								addButtonHoverHandlers(getInTouchButton);
+								
+								// Resume button click handler
 								if (resumeButton) {
-									// Animate on hover
-									resumeButton.addEventListener('mouseenter', function() {
-										hoverIcon.style.backgroundImage = 'url(' + gifSrc + '?t=' + Date.now() + ')';
-									});
-									
-									resumeButton.addEventListener('mouseleave', function() {
-										hoverIcon.style.backgroundImage = 'url(' + staticFrame + ')';
-									});
-									
-									// Click handler
 									resumeButton.addEventListener('click', function(e) {
 										e.preventDefault();
-										// Animate the cloud
 										animateCloud();
-										// Open resume in new tab (update this URL with your actual resume link)
 										window.open('YOUR_RESUME_URL_HERE', '_blank', 'noopener,noreferrer');
+									});
+								}
+								
+								// Projects button click handler
+								if (projectsButton) {
+									projectsButton.addEventListener('click', function(e) {
+										e.preventDefault();
+										animateCloud();
+										const targetSection = document.getElementById('two');
+										if (targetSection) {
+											targetSection.scrollIntoView({ behavior: 'smooth' });
+										}
+									});
+								}
+								
+								// Timeline button click handler
+								if (timelineButton) {
+									timelineButton.addEventListener('click', function(e) {
+										e.preventDefault();
+										animateCloud();
+										const targetSection = document.getElementById('timeline');
+										if (targetSection) {
+											targetSection.scrollIntoView({ behavior: 'smooth' });
+										} else {
+											// If timeline section doesn't exist, scroll to a placeholder or show message
+											console.log('Timeline section not found');
+										}
+									});
+								}
+								
+								// Get In Touch button click handler
+								if (getInTouchButton) {
+									getInTouchButton.addEventListener('click', function(e) {
+										e.preventDefault();
+										animateCloud();
+										const targetSection = document.getElementById('three');
+										if (targetSection) {
+											targetSection.scrollIntoView({ behavior: 'smooth' });
+										}
 									});
 								}
 							} catch(e) {

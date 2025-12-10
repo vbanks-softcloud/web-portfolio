@@ -3119,17 +3119,33 @@ input, select, textarea {
 				width: 100%;
 			}
 
-			/* Cloud icon and Resume button - prevent overlap with header on mobile */
+			/* Cloud icon and buttons - prevent overlap with header on mobile */
 			.hover-icon {
 				top: -3em !important;
 				z-index: 0 !important;
 				pointer-events: none !important;
 			}
 
+			.button-group-inline {
+				top: -2.5em !important;
+				left: 3em !important;
+				gap: 0.4em !important;
+				flex-wrap: wrap !important;
+			}
+
 			.resume-button-inline {
-				top: -3.4em !important;
+				position: relative !important;
+				top: 0 !important;
 				z-index: 2 !important;
 				pointer-events: auto !important;
+				font-size: 0.7em !important;
+				padding: 0 0.8em !important;
+			}
+
+			#get-in-touch-button {
+				flex-basis: auto !important;
+				width: auto !important;
+				margin-top: 0.5em !important;
 			}
 
 	}
@@ -3199,17 +3215,33 @@ input, select, textarea {
 					padding: 2.25em 0 0 0;
 				}
 
-			/* Cloud icon and Resume button - prevent overlap with header on mobile */
+			/* Cloud icon and buttons - prevent overlap with header on mobile */
 			.hover-icon {
 				top: -3em !important;
 				z-index: 0 !important;
 				pointer-events: none !important;
 			}
 
+			.button-group-inline {
+				top: -2.5em !important;
+				left: 3em !important;
+				gap: 0.4em !important;
+				flex-wrap: wrap !important;
+			}
+
 			.resume-button-inline {
-				top: -3.4em !important;
+				position: relative !important;
+				top: 0 !important;
 				z-index: 2 !important;
 				pointer-events: auto !important;
+				font-size: 0.7em !important;
+				padding: 0 0.8em !important;
+			}
+
+			#get-in-touch-button {
+				flex-basis: auto !important;
+				width: auto !important;
+				margin-top: 0.5em !important;
 			}
 
 		/* Poptrox */
@@ -3277,17 +3309,28 @@ input, select, textarea {
 			z-index: 0;
 		}
 
-		.resume-button-inline {
+		.button-group-inline {
 			position: absolute;
-			top: -6.2em;
-			left: 4em;
+			top: -4.5em;
+			left: 3em;
+			display: flex;
+			gap: 0.4em;
+			flex-wrap: nowrap;
+			align-items: center;
+		}
+
+		.resume-button-inline {
+			position: relative;
+			top: 0;
+			left: 0;
 			margin: 0;
 			white-space: nowrap;
-			font-size: 0.75em;
-			padding: 0 1em;
+			font-size: 0.7em;
+			padding: 0 0.8em;
 			height: 2em;
 			line-height: 1.7em;
-			min-width: 5em;
+			min-width: auto;
+			flex-shrink: 0;
 			text-align: center;
 			background-color: #D2DCFD;
 			border-color: #052A75;
