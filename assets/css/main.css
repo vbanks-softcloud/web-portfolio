@@ -2709,6 +2709,10 @@ input, select, textarea {
 				color: #1a1919;
 			}
 
+			#main > section#two h2 {
+				color: #143fb8;
+			}
+
 /* Poptrox */
 
 	@-moz-keyframes spin {
@@ -3349,12 +3353,13 @@ input, select, textarea {
 			border-color: #052A75;
 			z-index: 1;
 			pointer-events: auto;
+			color: #000000;
 		}
 
 		.resume-button-inline:hover {
 			background-color: #93B2F4;
 			border-color: #052A75;
-			color: #ffffff !important;
+			color: #000000 !important;
 		}
 		
 	/* Section One - Move Lower */
