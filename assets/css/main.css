@@ -2608,6 +2608,7 @@ input, select, textarea {
 		text-align: right;
 		top: 0;
 		width: 35%;
+		z-index: 1;
 	}
 
 		#header > * {
@@ -3118,6 +3119,19 @@ input, select, textarea {
 				width: 100%;
 			}
 
+			/* Cloud icon and Resume button - prevent overlap with header on mobile */
+			.hover-icon {
+				top: -3em !important;
+				z-index: 0 !important;
+				pointer-events: none !important;
+			}
+
+			.resume-button-inline {
+				top: -3.4em !important;
+				z-index: 2 !important;
+				pointer-events: auto !important;
+			}
+
 	}
 
 /* Small */
@@ -3185,6 +3199,19 @@ input, select, textarea {
 					padding: 2.25em 0 0 0;
 				}
 
+			/* Cloud icon and Resume button - prevent overlap with header on mobile */
+			.hover-icon {
+				top: -3em !important;
+				z-index: 0 !important;
+				pointer-events: none !important;
+			}
+
+			.resume-button-inline {
+				top: -3.4em !important;
+				z-index: 2 !important;
+				pointer-events: auto !important;
+			}
+
 		/* Poptrox */
 
 			.poptrox-popup {
@@ -3233,6 +3260,7 @@ input, select, textarea {
 		.ipsum-text {
 			position: relative;
 			display: inline-block;
+			pointer-events: auto;
 		}
 
 		.hover-icon {
@@ -3240,17 +3268,18 @@ input, select, textarea {
 			position: absolute;
 			width: 2.5em;
 			height: 2.5em;
-			top: -3.5em;
+			top: -5.2em;
 			left: 0;
 			pointer-events: none;
 			background-size: contain;
 			background-repeat: no-repeat;
 			background-position: center;
+			z-index: 0;
 		}
 
 		.resume-button-inline {
 			position: absolute;
-			top: -3.9em;
+			top: -6.2em;
 			left: 4em;
 			margin: 0;
 			white-space: nowrap;
@@ -3262,6 +3291,8 @@ input, select, textarea {
 			text-align: center;
 			background-color: #D2DCFD;
 			border-color: #052A75;
+			z-index: 1;
+			pointer-events: auto;
 		}
 
 		.resume-button-inline:hover {
