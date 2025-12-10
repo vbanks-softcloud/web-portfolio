@@ -515,16 +515,16 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 									}
 								}
 								
-								// Animate on hover (if ipsumText exists)
-								if (ipsumText) {
-									ipsumText.addEventListener('mouseenter', function() {
-										hoverIcon.style.backgroundImage = 'url(' + gifSrc + '?t=' + Date.now() + ')';
-									});
-									
-									ipsumText.addEventListener('mouseleave', function() {
-										hoverIcon.style.backgroundImage = 'url(' + staticFrame + ')';
-									});
-								}
+								// Animate on hover (if ipsumText exists) - DISABLED
+								// if (ipsumText) {
+								// 	ipsumText.addEventListener('mouseenter', function() {
+								// 		hoverIcon.style.backgroundImage = 'url(' + gifSrc + '?t=' + Date.now() + ')';
+								// 	});
+								// 	
+								// 	ipsumText.addEventListener('mouseleave', function() {
+								// 		hoverIcon.style.backgroundImage = 'url(' + staticFrame + ')';
+								// 	});
+								// }
 								
 								// Add hover handlers to all buttons
 								addButtonHoverHandlers(resumeButton);

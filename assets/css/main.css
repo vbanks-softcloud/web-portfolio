@@ -3314,7 +3314,7 @@ input, select, textarea {
 			width: 2.5em;
 			height: 2.5em;
 			top: -5.2em;
-			left: 0;
+			left: -0.5em;
 			pointer-events: none;
 			background-size: contain;
 			background-repeat: no-repeat;
@@ -3325,7 +3325,7 @@ input, select, textarea {
 		.button-group-inline {
 			position: absolute;
 			top: -4.5em;
-			left: 3em;
+			left: 2.5em;
 			display: flex;
 			gap: 0.4em;
 			flex-wrap: nowrap;
