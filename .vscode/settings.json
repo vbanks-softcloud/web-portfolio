@@ -1,0 +1,13 @@
+{
+  "github-actions.workflows.pinned.workflows": [],
+  "github-actions.workflows.pinned.refresh.enabled": false,
+  "yaml.schemas": {
+    "https://json.schemastore.org/github-workflow.json": ".github/workflows/*.yml"
+  },
+  "github-actions.workflows.pinned.refresh.interval": 0,
+  "github-actions.diagnostics.enable": true,
+  "github-actions.diagnostics.ignore": [
+    "Context access might be invalid"
+  ]
+}
+
