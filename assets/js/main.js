@@ -108,8 +108,111 @@
 					usePopupCaption: true,
 					usePopupDefaultStyling: false,
 					usePopupEasyClose: false,
-					usePopupNav: true,
+					usePopupNav: false, // Disable navigation to prevent going to next image
 					windowMargin: (breakpoints.active('<=small') ? 0 : 50)
+				});
+
+				// Image hover shuffle functionality
+				var $workItems = $('.work-item');
+				var imageSources = [];
+				
+				// Collect all image sources
+				$workItems.each(function() {
+					var $img = $(this).find('img');
+					var thumbSrc = $img.attr('src');
+					var fullSrc = $(this).find('a').attr('href');
+					imageSources.push({
+						thumb: thumbSrc,
+						full: fullSrc
+					});
+				});
+
+				// Add hover functionality to each work item
+				$workItems.each(function(index) {
+					var $this = $(this);
+					var $img = $this.find('img');
+					var $link = $this.find('a');
+					var originalThumb = $img.attr('src');
+					var originalFull = $link.attr('href');
+					
+					// Calculate next image index (wrap around)
+					var nextIndex = (index + 1) % imageSources.length;
+					var nextThumb = imageSources[nextIndex].thumb;
+					var nextFull = imageSources[nextIndex].full;
+					
+					// Store original sources
+					$this.data('originalThumb', originalThumb);
+					$this.data('originalFull', originalFull);
+					$this.data('nextThumb', nextThumb);
+					$this.data('nextFull', nextFull);
+					
+					// Variables for touch handling
+					var touchStartTime = 0;
+					var touchTimeout = null;
+					var isTouching = false;
+					
+					// Desktop: Hover in: show next image
+					$this.on('mouseenter', function() {
+						if (!isTouching) {
+							$img.attr('src', nextThumb);
+						}
+					});
+					
+					// Desktop: Hover out: restore original image
+					$this.on('mouseleave', function() {
+						if (!isTouching) {
+							$img.attr('src', originalThumb);
+						}
+					});
+					
+					// Mobile: Touch start - show next image
+					$this.on('touchstart', function(e) {
+						isTouching = true;
+						touchStartTime = Date.now();
+						$img.attr('src', nextThumb);
+						
+						// Clear any existing timeout
+						if (touchTimeout) {
+							clearTimeout(touchTimeout);
+						}
+					});
+					
+					// Mobile: Touch end - restore original image after delay
+					$this.on('touchend', function(e) {
+						var touchDuration = Date.now() - touchStartTime;
+						
+						// If it's a quick tap (less than 300ms), restore immediately for click
+						// Otherwise, restore after a short delay
+						if (touchDuration < 300) {
+							$img.attr('src', originalThumb);
+							isTouching = false;
+						} else {
+							// Longer touch - restore after delay
+							touchTimeout = setTimeout(function() {
+								$img.attr('src', originalThumb);
+								isTouching = false;
+							}, 300);
+						}
+					});
+					
+					// Mobile: Touch cancel - restore original image
+					$this.on('touchcancel', function(e) {
+						$img.attr('src', originalThumb);
+						isTouching = false;
+						if (touchTimeout) {
+							clearTimeout(touchTimeout);
+						}
+					});
+					
+					// On click: ensure original image is used (restore if hovered/touched)
+					$link.on('click', function(e) {
+						$img.attr('src', originalThumb);
+						$link.attr('href', originalFull);
+						isTouching = false;
+						if (touchTimeout) {
+							clearTimeout(touchTimeout);
+						}
+					});
 				});
 
 			});
