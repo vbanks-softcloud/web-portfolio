@@ -2468,10 +2468,10 @@ input, select, textarea {
 		-webkit-appearance: none;
 		-ms-appearance: none;
 		appearance: none;
-		-moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-		-webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-		-ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-		transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+		-moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+		-webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+		-ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+		transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
 		background-color: transparent;
 		border-radius: 0.35em;
 		border: solid 3px #efefef;
@@ -2495,6 +2495,9 @@ input, select, textarea {
 		.button:hover {
 			border-color: #49bf9d;
 			color: #49bf9d !important;
+			box-shadow: 0 0 15px rgba(148, 178, 230, 0.6), 0 0 30px rgba(148, 178, 230, 0.4);
+			-moz-box-shadow: 0 0 15px rgba(148, 178, 230, 0.6), 0 0 30px rgba(148, 178, 230, 0.4);
+			-webkit-box-shadow: 0 0 15px rgba(148, 178, 230, 0.6), 0 0 30px rgba(148, 178, 230, 0.4);
 		}
 
 		input[type="submit"]:active,
@@ -2596,6 +2599,16 @@ input, select, textarea {
 			background-color: #f7f7f7;
 			border-radius: 0.35em;
 			border: 1px solid #e0e0e0;
+			-moz-transition: box-shadow 0.3s ease-in-out;
+			-webkit-transition: box-shadow 0.3s ease-in-out;
+			-ms-transition: box-shadow 0.3s ease-in-out;
+			transition: box-shadow 0.3s ease-in-out;
+		}
+
+		.work-item .image:hover {
+			box-shadow: 0 0 20px rgba(148, 178, 230, 0.6), 0 0 40px rgba(148, 178, 230, 0.4);
+			-moz-box-shadow: 0 0 20px rgba(148, 178, 230, 0.6), 0 0 40px rgba(148, 178, 230, 0.4);
+			-webkit-box-shadow: 0 0 20px rgba(148, 178, 230, 0.6), 0 0 40px rgba(148, 178, 230, 0.4);
 		}
 
 		.work-item .image img {
