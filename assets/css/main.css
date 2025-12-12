@@ -190,7 +190,7 @@ input, select, textarea {
 
 	hr {
 		border: 0;
-		border-bottom: solid 2px #efefef;
+		border-bottom: solid 2px #cbd1e1;
 		margin: 2em 0;
 	}
 
@@ -2190,7 +2190,7 @@ input, select, textarea {
 		}
 
 			ul.alt li {
-				border-top: solid 2px #efefef;
+				border-top: solid 2px #cbd1e1;
 				padding: 0.5em 0;
 			}
 
@@ -2412,11 +2412,11 @@ input, select, textarea {
 		}
 
 		table thead {
-			border-bottom: solid 2px #efefef;
+			border-bottom: solid 2px #cbd1e1;
 		}
 
 		table tfoot {
-			border-top: solid 2px #efefef;
+			border-top: solid 2px #cbd1e1;
 		}
 
 		table.alt {
@@ -2424,7 +2424,7 @@ input, select, textarea {
 		}
 
 			table.alt tbody tr td {
-				border: solid 2px #efefef;
+				border: solid 2px #cbd1e1;
 				border-left-width: 0;
 				border-top-width: 0;
 			}
@@ -2748,7 +2748,7 @@ input, select, textarea {
 	}
 
 		#main > section {
-			border-top: solid 2px #efefef;
+			border-top: solid 2px #cbd1e1;
 			margin: 4em 0 0 0;
 			padding: 4em 0 0 0;
 		}
@@ -3439,6 +3439,13 @@ input, select, textarea {
 			border-color: #052A75;
 			color: #000000 !important;
 		}
+
+	/* Responsive button wrapping for smaller windows */
+	@media screen and (max-width: 1200px) {
+		.button-group-inline {
+			flex-wrap: wrap;
+		}
+	}
 		
 	/* Section One - Move Lower */
 
