@@ -7,6 +7,12 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
+/* Navigation Button Font - Change this line to change all button fonts */
+/* Available fonts: "Nunito", "Ramabhadra", "Roboto" */
+:root {
+	--nav-button-font: "Ramabhadra", "Source Sans Pro", Helvetica, sans-serif;
+}
+
 html, body, div, span, applet, object,
 iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
 pre, a, abbr, acronym, address, big, cite,
@@ -3278,6 +3284,7 @@ input, select, textarea {
 				z-index: 2 !important;
 				pointer-events: auto !important;
 				font-size: 0.7em !important;
+				font-family: var(--nav-button-font) !important;
 				padding: 0 0.8em !important;
 				color: #000000 !important;
 			}
@@ -3389,6 +3396,7 @@ input, select, textarea {
 				z-index: 2 !important;
 				pointer-events: auto !important;
 				font-size: 0.7em !important;
+				font-family: var(--nav-button-font) !important;
 				padding: 0 0.8em !important;
 				color: #000000 !important;
 			}
@@ -3535,6 +3543,7 @@ input, select, textarea {
 			display: inline-block;
 			pointer-events: auto;
 			color: #000000;
+			font-weight: 700;
 		}
 
 		.hover-icon {
@@ -3552,15 +3561,15 @@ input, select, textarea {
 			overflow: hidden;
 		}
 
-		.button-group-inline {
-			position: absolute;
-			top: -4.5em;
-			left: 2.5em;
-			display: flex;
-			gap: 0.4em;
-			flex-wrap: nowrap;
-			align-items: center;
-		}
+	.button-group-inline {
+		position: absolute;
+		top: -4.5em;
+		left: 2.5em;
+		display: flex;
+		gap: 0.4em;
+		flex-wrap: nowrap;
+		align-items: center;
+	}
 
 		.resume-button-inline {
 			position: relative;
@@ -3569,6 +3578,8 @@ input, select, textarea {
 			margin: 0;
 			white-space: nowrap;
 			font-size: 0.7em;
+			font-family: var(--nav-button-font);
+			font-weight: 400;
 			padding: 0 0.8em;
 			height: 2em;
 			line-height: 1.7em;
