@@ -2081,12 +2081,13 @@ input, select, textarea {
 				-ms-transition: opacity 0.2s ease-in-out;
 				transition: opacity 0.2s ease-in-out;
 				border-radius: 0.35em;
-				border: solid 3px rgba(255, 255, 255, 0.5);
-				color: #fff;
+				border: solid 3px #ffffff;
+				background-color: rgba(148, 178, 230, 0.855);
+				color: #ffffff;
 				content: 'View';
 				display: inline-block;
-				font-size: 0.8em;
-				font-weight: 400;
+				font-size: 0.9em;
+				font-weight: 600;
 				left: 50%;
 				line-height: 2.25em;
 				margin: -1.25em 0 0 -3em;
@@ -2101,6 +2102,8 @@ input, select, textarea {
 
 			.image.thumb:hover:after {
 				opacity: 1.0;
+				background-color: rgba(148, 178, 230, 0.855);
+				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 			}
 
 			.image.thumb:hover:before {
@@ -2613,6 +2616,15 @@ input, select, textarea {
 			transform: translateZ(0);
 			-webkit-transform: translateZ(0);
 			will-change: transform;
+			-moz-transition: filter 0.3s ease-in-out;
+			-webkit-transition: filter 0.3s ease-in-out;
+			-ms-transition: filter 0.3s ease-in-out;
+			transition: filter 0.3s ease-in-out;
+		}
+
+		.work-item .image:hover img {
+			filter: blur(3px);
+			-webkit-filter: blur(3px);
 		}
 
 		.work-item h3 {
@@ -3406,6 +3418,15 @@ input, select, textarea {
 				transform: translateZ(0) !important;
 				-webkit-transform: translateZ(0) !important;
 				will-change: transform !important;
+				-moz-transition: filter 0.3s ease-in-out !important;
+				-webkit-transition: filter 0.3s ease-in-out !important;
+				-ms-transition: filter 0.3s ease-in-out !important;
+				transition: filter 0.3s ease-in-out !important;
+			}
+
+			.work-item .image:hover img {
+				filter: blur(3px) !important;
+				-webkit-filter: blur(3px) !important;
 			}
 
 		/* Poptrox */
@@ -3475,6 +3496,15 @@ input, select, textarea {
 				transform: translateZ(0) !important;
 				-webkit-transform: translateZ(0) !important;
 				will-change: transform !important;
+				-moz-transition: filter 0.3s ease-in-out !important;
+				-webkit-transition: filter 0.3s ease-in-out !important;
+				-ms-transition: filter 0.3s ease-in-out !important;
+				transition: filter 0.3s ease-in-out !important;
+			}
+
+			.work-item .image:hover img {
+				filter: blur(3px) !important;
+				-webkit-filter: blur(3px) !important;
 			}
 
 	}

@@ -135,10 +135,41 @@
 					var originalThumb = $img.attr('src');
 					var originalFull = $link.attr('href');
 					
+					// Skip shuffle for Student Success Center images
+					var skipShuffle = originalThumb.indexOf('Student Success Center') !== -1 || 
+									  originalThumb.indexOf('01.jpg') !== -1;
+					
+					if (skipShuffle) {
+						// Don't add hover/touch functionality for these images
+						return;
+					}
+					
 					// Calculate next image index (wrap around)
 					var nextIndex = (index + 1) % imageSources.length;
 					var nextThumb = imageSources[nextIndex].thumb;
 					var nextFull = imageSources[nextIndex].full;
+					
+					// Skip if next image is also a Student Success Center or 01.jpg
+					if (nextThumb.indexOf('Student Success Center') !== -1 || 
+						nextThumb.indexOf('01.jpg') !== -1) {
+						// Find the next valid image
+						var foundNext = false;
+						for (var i = 1; i < imageSources.length; i++) {
+							var checkIndex = (index + i) % imageSources.length;
+							var checkThumb = imageSources[checkIndex].thumb;
+							if (checkThumb.indexOf('Student Success Center') === -1 && 
+								checkThumb.indexOf('01.jpg') === -1) {
+								nextThumb = checkThumb;
+								nextFull = imageSources[checkIndex].full;
+								foundNext = true;
+								break;
+							}
+						}
+						// If no valid next image found, don't add shuffle
+						if (!foundNext) {
+							return;
+						}
+					}
 					
 					// Store original sources
 					$this.data('originalThumb', originalThumb);
