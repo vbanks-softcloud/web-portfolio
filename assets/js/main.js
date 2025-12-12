@@ -98,22 +98,73 @@
 		// Lightbox gallery.
 			$window.on('load', function() {
 
+				// Image hover shuffle functionality
+				var $workItems = $('.work-item');
+				
+				// Set up carousel for Pathfinder project BEFORE poptrox initialization
+				var $carouselModal = $('#image-carousel-modal');
+				var $carouselSlides = $carouselModal.find('.carousel-slide');
+				var $carouselIndicators = $carouselModal.find('.carousel-indicator');
+				var currentSlide = 0;
+				var totalSlides = $carouselSlides.length;
+
+				// Function to show slide
+				function showSlide(index) {
+					$carouselSlides.removeClass('active');
+					$carouselIndicators.removeClass('active');
+					$carouselSlides.eq(index).addClass('active');
+					$carouselIndicators.eq(index).addClass('active');
+					currentSlide = index;
+				}
+
+				// Function to next slide
+				function nextSlide() {
+					var next = (currentSlide + 1) % totalSlides;
+					showSlide(next);
+				}
+
+				// Function to previous slide
+				function prevSlide() {
+					var prev = (currentSlide - 1 + totalSlides) % totalSlides;
+					showSlide(prev);
+				}
+
+				// Open carousel for Pathfinder project - set up BEFORE poptrox
+				$workItems.each(function() {
+					var $this = $(this);
+					var $link = $this.find('a.image');
+					var imgSrc = $this.find('img').attr('src');
+					
+					// Check if this is the Pathfinder project
+					if (imgSrc && imgSrc.indexOf('Pathfinder-Senior-design-poster') !== -1) {
+						// Add data attribute to exclude from poptrox
+						$link.attr('data-carousel', 'true');
+						$link.on('click.carousel', function(e) {
+							e.preventDefault();
+							e.stopPropagation();
+							e.stopImmediatePropagation();
+							$carouselModal.addClass('active');
+							$body.css('overflow', 'hidden');
+							showSlide(0);
+							return false;
+						});
+					}
+				});
+
+				// Initialize poptrox (will skip items with data-carousel attribute via selector)
 				$('#two').poptrox({
 					caption: function($a) { return $a.next('h3').text(); },
 					overlayColor: '#2c2c2c',
 					overlayOpacity: 0.85,
 					popupCloserText: '',
 					popupLoaderText: '',
-					selector: '.work-item a.image',
+					selector: '.work-item a.image:not([data-carousel="true"])',
 					usePopupCaption: true,
 					usePopupDefaultStyling: false,
 					usePopupEasyClose: false,
 					usePopupNav: false, // Disable navigation to prevent going to next image
 					windowMargin: (breakpoints.active('<=small') ? 0 : 50)
 				});
-
-				// Image hover shuffle functionality
-				var $workItems = $('.work-item');
 				var imageSources = [];
 				
 				// Collect all image sources
@@ -244,6 +295,55 @@
 							clearTimeout(touchTimeout);
 						}
 					});
+				});
+
+				// Carousel navigation (set up after carousel modal is created)
+				$carouselModal.find('.carousel-next').on('click', function(e) {
+					e.stopPropagation();
+					nextSlide();
+				});
+
+				$carouselModal.find('.carousel-prev').on('click', function(e) {
+					e.stopPropagation();
+					prevSlide();
+				});
+
+				// Indicator clicks
+				$carouselIndicators.on('click', function() {
+					var slideIndex = $(this).data('slide');
+					showSlide(slideIndex);
+				});
+
+				// Close carousel
+				$carouselModal.find('.carousel-close').on('click', function(e) {
+					e.stopPropagation();
+					$carouselModal.removeClass('active');
+					$body.css('overflow', ''); // Restore body scroll
+				});
+
+				// Close on overlay click
+				$carouselModal.find('.carousel-overlay').on('click', function(e) {
+					if (e.target === this) {
+						$carouselModal.removeClass('active');
+						$body.css('overflow', ''); // Restore body scroll
+					}
+				});
+
+				// Keyboard navigation
+				$(document).on('keydown', function(e) {
+					if ($carouselModal.hasClass('active')) {
+						if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+							e.preventDefault();
+							nextSlide();
+						} else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+							e.preventDefault();
+							prevSlide();
+						} else if (e.key === 'Escape') {
+							e.preventDefault();
+							$carouselModal.removeClass('active');
+							$body.css('overflow', ''); // Restore body scroll
+						}
+					}
 				});
 
 			});
