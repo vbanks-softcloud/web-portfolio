@@ -3104,7 +3104,13 @@ input, select, textarea {
 	}
 
 	body.is-touch .image.thumb:after {
-		display: none !important;
+		opacity: 0 !important;
+		display: inline-block !important;
+	}
+
+	body.is-touch .image.thumb:active:after,
+	body.is-touch .image.thumb.touching:after {
+		opacity: 1.0 !important;
 	}
 
 	body.is-touch #header {
@@ -3699,6 +3705,16 @@ input, select, textarea {
 		height: 100%;
 		object-fit: contain;
 		display: block;
+	}
+
+	.carousel-slide video {
+		width: 100%;
+		max-width: 100%;
+		height: auto;
+		max-height: 80vh;
+		object-fit: contain;
+		display: block;
+		border-radius: 0.35em;
 	}
 
 	.carousel-nav {

@@ -110,11 +110,25 @@
 
 				// Function to show slide
 				function showSlide(index) {
+					// Pause all videos in carousel
+					$carouselSlides.find('video').each(function() {
+						this.pause();
+					});
+					
 					$carouselSlides.removeClass('active');
 					$carouselIndicators.removeClass('active');
 					$carouselSlides.eq(index).addClass('active');
 					$carouselIndicators.eq(index).addClass('active');
 					currentSlide = index;
+					
+					// Play video if the active slide contains one
+					var $activeSlide = $carouselSlides.eq(index);
+					var $video = $activeSlide.find('video');
+					if ($video.length > 0) {
+						$video[0].play().catch(function(error) {
+							console.log('Video autoplay prevented:', error);
+						});
+					}
 				}
 
 				// Function to next slide
@@ -190,11 +204,12 @@
 					// Check if this is the Pathfinder project (by checking the link href)
 					if (linkHref && linkHref.indexOf('Pathfinder-Senior-design-poster') !== -1) {
 						// Manually list all Student Success Center images
+						// Note: Login.png is used as the thumbnail for Final Demo video
 						var studentSuccessImages = [
 							{ thumb: 'images/thumbs/Student Success Center/landing.png', full: 'images/thumbs/Student Success Center/landing.png' },
-							{ thumb: 'images/thumbs/Student Success Center/Login.png', full: 'images/thumbs/Student Success Center/Login.png' },
 							{ thumb: 'images/thumbs/Student Success Center/team group picture.jpg', full: 'images/thumbs/Student Success Center/team group picture.jpg' },
-							{ thumb: 'images/thumbs/Student Success Center/Pathfinder-Senior-design-poster.png', full: 'images/thumbs/Student Success Center/Pathfinder-Senior-design-poster.png' }
+							{ thumb: 'images/thumbs/Student Success Center/Pathfinder-Senior-design-poster.png', full: 'images/thumbs/Student Success Center/Pathfinder-Senior-design-poster.png' },
+							{ thumb: 'images/thumbs/Student Success Center/Login.png', full: 'images/thumbs/Student Success Center/Final Demo.mp4', isVideo: true }
 						];
 						
 						// Store the previous image to avoid showing the same one twice
@@ -403,6 +418,10 @@
 				// Close carousel
 				$carouselModal.find('.carousel-close').on('click', function(e) {
 					e.stopPropagation();
+					// Pause all videos before closing
+					$carouselModal.find('video').each(function() {
+						this.pause();
+					});
 					$carouselModal.removeClass('active');
 					$body.css('overflow', ''); // Restore body scroll
 				});
@@ -410,6 +429,10 @@
 				// Close on overlay click
 				$carouselModal.find('.carousel-overlay').on('click', function(e) {
 					if (e.target === this) {
+						// Pause all videos before closing
+						$carouselModal.find('video').each(function() {
+							this.pause();
+						});
 						$carouselModal.removeClass('active');
 						$body.css('overflow', ''); // Restore body scroll
 					}
@@ -432,6 +455,19 @@
 					}
 				});
 
+				// Touch handlers for View button on mobile
+				if ($body.hasClass('is-touch')) {
+					$('.work-item .image.thumb').on('touchstart', function(e) {
+						$(this).addClass('touching');
+					}).on('touchend touchcancel', function(e) {
+						var $this = $(this);
+						// Keep the class briefly to show the button, then remove it
+						setTimeout(function() {
+							$this.removeClass('touching');
+						}, 300);
+					});
+				}
+
 			});
 
-})(jQuery);
+	})(jQuery);
