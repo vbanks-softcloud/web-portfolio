@@ -2104,6 +2104,8 @@ input, select, textarea {
 				text-decoration: none;
 				top: 50%;
 				white-space: nowrap;
+				pointer-events: none;
+				z-index: 100;
 			}
 
 			.image.thumb:hover:after {
@@ -2619,6 +2621,7 @@ input, select, textarea {
 			height: 100%;
 			overflow: hidden;
 			border-radius: 0.35em;
+			z-index: 2;
 		}
 
 		.work-item .image > a:first-child img {
@@ -2669,29 +2672,39 @@ input, select, textarea {
 			-webkit-filter: blur(3px);
 		}
 
-		.work-item .image .github-icon-link:hover ~ a img,
-		.work-item .image:has(.github-icon-link:hover) img,
-		.work-item .image.github-hover img {
+		.work-item .image .project-icon-link:hover ~ a img,
+		.work-item .image:has(.project-icon-link:hover) img,
+		.work-item .image.project-icons-hover img {
 			filter: blur(0px) !important;
 			-webkit-filter: blur(0px) !important;
 		}
 
-		.work-item .image:has(.github-icon-link:hover),
-		.work-item .image.github-hover {
+		.work-item .image:has(.project-icon-link:hover),
+		.work-item .image.project-icons-hover {
 			box-shadow: none !important;
 		}
 
-		.work-item .image.thumb:has(.github-icon-link:hover):after,
-		.work-item .image.thumb.github-hover:after {
+		.work-item .image.thumb:has(.project-icon-link:hover):after,
+		.work-item .image.thumb.project-icons-hover:after {
 			opacity: 0 !important;
 		}
 
-		.work-item .image.github-icon-link,
-		.work-item .image .github-icon-link {
+		.work-item .image .project-icons {
 			position: absolute;
-			bottom: -45px;
-			right: -2px;
+			bottom: -42px;
+			right: -12px;
 			z-index: 1000;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			gap: 0;
+		}
+
+		.work-item .image .project-icon-link:not(:last-child) {
+			margin-right: -20px;
+		}
+
+		.work-item .image .project-icon-link {
 			width: 50px;
 			height: 50px;
 			display: flex !important;
@@ -2711,16 +2724,16 @@ input, select, textarea {
 			margin: 0;
 		}
 
-		.work-item .image .github-icon-link:hover {
+		.work-item .image .project-icon-link:hover {
 			background-color: transparent;
 			transform: scale(1.1);
 			-moz-transform: scale(1.1);
 			-webkit-transform: scale(1.1);
 		}
 
-		.work-item .image .github-icon-link .icon {
+		.work-item .image .project-icon-link .icon {
 			color: #808080;
-			font-size: 1.3em !important;
+			font-size: 1.2em !important;
 			width: 100%;
 			height: 100%;
 			display: flex;
@@ -2733,20 +2746,23 @@ input, select, textarea {
 			transition: color 0.3s ease-in-out;
 		}
 
-		.work-item .image .github-icon-link .icon:before {
-			font-size: 1.3em !important;
+		.work-item .image .project-icon-link .icon:before {
+			font-size: 1.2em !important;
 		}
 
-		.work-item .image .github-icon-link:hover .icon {
+		.work-item .image .project-icon-link:hover .icon {
 			color: #4A90E2;
 		}
 
 		.work-item h3 {
-			font-size: 1em;
+			color: #000000;
+			font-size: 2m;
+			font-weight: 700;
 			margin: 0 0 0.5em 0;
 		}
 
 		.work-item p {
+			color: #555555;
 			font-size: 0.8em;
 			line-height: 1.5em;
 			margin: 0;

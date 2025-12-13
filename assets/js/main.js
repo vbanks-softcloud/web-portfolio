@@ -155,8 +155,8 @@
 						// Add data attribute to exclude from poptrox
 						$link.attr('data-carousel', 'true');
 						$link.on('click.carousel', function(e) {
-							// Don't open carousel if clicking on GitHub icon
-							if ($(e.target).closest('.github-icon-link').length > 0) {
+							// Don't open carousel if clicking on project icons
+							if ($(e.target).closest('.project-icons').length > 0) {
 								return;
 							}
 							e.preventDefault();
@@ -169,8 +169,8 @@
 						});
 					}
 					
-					// Prevent GitHub icon clicks from triggering parent link
-					$this.find('.github-icon-link').on('click', function(e) {
+					// Prevent project icon clicks from triggering parent link
+					$this.find('.project-icon-link').on('click', function(e) {
 						e.stopPropagation();
 						e.stopImmediatePropagation();
 					});
@@ -479,11 +479,11 @@
 					});
 				}
 
-				// Prevent image hover effects when hovering over GitHub icon
-				$('.work-item .github-icon-link').on('mouseenter', function(e) {
-					$(this).closest('.image').addClass('github-hover');
+				// Prevent image hover effects when hovering over project icons
+				$('.work-item .project-icon-link').on('mouseenter', function(e) {
+					$(this).closest('.image').addClass('project-icons-hover');
 				}).on('mouseleave', function(e) {
-					$(this).closest('.image').removeClass('github-hover');
+					$(this).closest('.image').removeClass('project-icons-hover');
 				});
 
 			});
