@@ -2725,17 +2725,17 @@ input, select, textarea {
 		}
 
 		.work-item .project-role-label-text {
-			font-size: 0.75em;
+			font-size: 0.79em;
 			font-weight: bold;
 		}
 
 		.work-item .project-role-value {
-			font-size: 0.65em;
+			font-size: 0.70em;
 			font-weight: normal;
 		}
 
 		.work-item .image .project-icon-link:not(:last-child) {
-			margin-right: -20px;
+			margin-right: -23px;
 		}
 
 		.work-item .image .project-icon-link:last-child {
@@ -2771,7 +2771,7 @@ input, select, textarea {
 
 		.work-item .image .project-icon-link .icon {
 			color: #808080;
-			font-size: 1.2em !important;
+			font-size: 1.19em !important;
 			width: 100%;
 			height: 100%;
 			display: flex;
