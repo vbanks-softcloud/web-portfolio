@@ -2696,7 +2696,7 @@ input, select, textarea {
 			z-index: 1000;
 			font-size: 1.3em;
 			color: #000000;
-			font-weight: 700;
+			font-weight: 800;
 			margin: 0;
 			margin-top: 5px;
 			margin-bottom: 7px;
@@ -2813,7 +2813,7 @@ input, select, textarea {
 
 		.work-item .tech-stack h4 {
 			color: #000000;
-			font-size: 0.75em;
+			font-size: 0.85em;
 			font-weight: 600;
 			margin: 0 0 0.75em 0;
 			text-transform: uppercase;
@@ -2891,6 +2891,28 @@ input, select, textarea {
 		.work-item .tech-stack-categories {
 			-webkit-overflow-scrolling: touch;
 			overflow-y: scroll !important;
+		}
+
+		.work-item .tech-stack-text {
+			color: #000000;
+			font-size: 0.7em;
+			line-height: 1.5em;
+			padding: 0;
+			margin: 0;
+		}
+
+		.work-item .tech-stack-line {
+			margin-bottom: 0.4em;
+		}
+
+		.work-item .tech-stack-line:last-child {
+			margin-bottom: 0;
+		}
+
+		.work-item .tech-stack-line strong {
+			font-weight: 800;
+			font-size: 1.0em;
+			color: #000000;
 		}
 
 		.work-item .tech-stack-category {
@@ -3804,6 +3826,7 @@ input, select, textarea {
 				display: inline-block !important;
 				vertical-align: middle !important;
 				margin-top: 0 !important;
+				font-weight: 800 !important;
 			}
 
 			.work-item .image .project-icon-link {
@@ -3904,6 +3927,7 @@ input, select, textarea {
 				display: inline-block !important;
 				vertical-align: middle !important;
 				margin-top: 0 !important;
+				font-weight: 800 !important;
 			}
 
 			.work-item .image .project-icon-link {
