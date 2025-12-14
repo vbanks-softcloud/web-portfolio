@@ -101,15 +101,68 @@
 				// Image hover shuffle functionality
 				var $workItems = $('.work-item');
 				
-				// Set up carousel for Pathfinder project BEFORE poptrox initialization
+				// Carousel data for each project
+				var carouselData = {
+					'student-success-center': [
+						{ type: 'image', src: 'images/thumbs/Student Success Center/Pathfinder-Senior-design-poster.png', alt: 'Pathfinder Poster' },
+						{ type: 'image', src: 'images/thumbs/Student Success Center/landing.png', alt: 'Landing Page' },
+						{ type: 'image', src: 'images/thumbs/Student Success Center/team group picture.jpg', alt: 'Team Group Picture' },
+						{ type: 'video', src: 'images/thumbs/Student Success Center/Final Demo.mp4', alt: 'Final Demo' }
+					],
+					'diversifynance': [
+						{ type: 'image', src: 'images/thumbs/Diversifynance/Diversifynance_landing_page.png', alt: 'Landing Page' },
+						{ type: 'video', src: 'images/thumbs/Diversifynance/Diversifynance_demo.mp4', alt: 'Demo Video' }
+					]
+				};
+
+				// Set up carousel modal BEFORE poptrox initialization
 				var $carouselModal = $('#image-carousel-modal');
-				var $carouselSlides = $carouselModal.find('.carousel-slide');
-				var $carouselIndicators = $carouselModal.find('.carousel-indicator');
+				var $carouselSlidesContainer = $carouselModal.find('.carousel-slides');
+				var $carouselIndicatorsContainer = $carouselModal.find('.carousel-indicators');
 				var currentSlide = 0;
-				var totalSlides = $carouselSlides.length;
+				var totalSlides = 0;
+				var $carouselSlides = null;
+				var $carouselIndicators = null;
+
+				// Function to populate carousel with project data
+				function populateCarousel(projectKey) {
+					var slides = carouselData[projectKey];
+					if (!slides || slides.length === 0) return false;
+
+					// Clear existing slides and indicators
+					$carouselSlidesContainer.empty();
+					$carouselIndicatorsContainer.empty();
+
+					// Create slides
+					slides.forEach(function(slide, index) {
+						var $slide = $('<div class="carousel-slide' + (index === 0 ? ' active' : '') + '"></div>');
+						
+						if (slide.type === 'video') {
+							$slide.html('<video controls style="width: 100%; height: auto; max-height: 80vh; object-fit: contain;"><source src="' + slide.src + '" type="video/mp4">Your browser does not support the video tag.</video>');
+						} else {
+							$slide.html('<img src="' + slide.src + '" alt="' + (slide.alt || '') + '" />');
+						}
+						
+						$carouselSlidesContainer.append($slide);
+						
+						// Create indicator
+						var $indicator = $('<span class="carousel-indicator' + (index === 0 ? ' active' : '') + '" data-slide="' + index + '"></span>');
+						$carouselIndicatorsContainer.append($indicator);
+					});
+
+					// Update references
+					$carouselSlides = $carouselSlidesContainer.find('.carousel-slide');
+					$carouselIndicators = $carouselIndicatorsContainer.find('.carousel-indicator');
+					totalSlides = slides.length;
+					currentSlide = 0;
+
+					return true;
+				}
 
 				// Function to show slide
 				function showSlide(index) {
+					if (!$carouselSlides || totalSlides === 0) return;
+					
 					// Pause all videos in carousel
 					$carouselSlides.find('video').each(function() {
 						this.pause();
@@ -133,25 +186,50 @@
 
 				// Function to next slide
 				function nextSlide() {
+					if (totalSlides === 0) return;
 					var next = (currentSlide + 1) % totalSlides;
 					showSlide(next);
 				}
 
 				// Function to previous slide
 				function prevSlide() {
+					if (totalSlides === 0) return;
 					var prev = (currentSlide - 1 + totalSlides) % totalSlides;
 					showSlide(prev);
 				}
 
-				// Open carousel for Pathfinder project - set up BEFORE poptrox
+				// Open carousel for projects with carousel data - set up BEFORE poptrox
 				$workItems.each(function() {
 					var $this = $(this);
 					var $imageContainer = $this.find('.image.thumb');
 					var $link = $imageContainer.find('a').first();
 					var linkHref = $link.attr('href');
+					var projectKey = null;
 					
-					// Check if this is the Pathfinder project (by checking the link href)
-					if (linkHref && linkHref.indexOf('Pathfinder-Senior-design-poster') !== -1) {
+					// Determine project key based on link href or project title
+					if (linkHref) {
+						if (linkHref.indexOf('Student Success Center') !== -1 || linkHref.indexOf('Pathfinder') !== -1) {
+							projectKey = 'student-success-center';
+						} else if (linkHref.indexOf('Diversifynance') !== -1) {
+							projectKey = 'diversifynance';
+						}
+					}
+					
+					// If no match from href, try project title
+					if (!projectKey) {
+						var $title = $this.find('.project-title-in-icons');
+						if ($title.length > 0) {
+							var titleText = $title.text().toLowerCase().trim();
+							if (titleText.indexOf('student success') !== -1) {
+								projectKey = 'student-success-center';
+							} else if (titleText.indexOf('diversifynance') !== -1) {
+								projectKey = 'diversifynance';
+							}
+						}
+					}
+					
+					// If project has carousel data, set up carousel click handler
+					if (projectKey && carouselData[projectKey]) {
 						// Add data attribute to exclude from poptrox
 						$link.attr('data-carousel', 'true');
 						$link.on('click.carousel', function(e) {
@@ -162,9 +240,13 @@
 							e.preventDefault();
 							e.stopPropagation();
 							e.stopImmediatePropagation();
-							$carouselModal.addClass('active');
-							$body.css('overflow', 'hidden');
-							showSlide(0);
+							
+							// Populate carousel with project data
+							if (populateCarousel(projectKey)) {
+								$carouselModal.addClass('active');
+								$body.css('overflow', 'hidden');
+								showSlide(0);
+							}
 							return false;
 						});
 					}
@@ -420,8 +502,8 @@
 					prevSlide();
 				});
 
-				// Indicator clicks
-				$carouselIndicators.on('click', function() {
+				// Indicator clicks (use event delegation for dynamically created indicators)
+				$carouselModal.on('click', '.carousel-indicator', function() {
 					var slideIndex = $(this).data('slide');
 					showSlide(slideIndex);
 				});
