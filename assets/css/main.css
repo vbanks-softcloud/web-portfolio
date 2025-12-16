@@ -2616,17 +2616,26 @@ input, select, textarea {
 	/* Position Tortor metus commodo (3rd work-item, left column) lower */
 	#two .row > .work-item:nth-child(3) {
 		grid-column: 1;
-		margin-top: -.5em;  /* Move Tortor metus commodo down */
+		margin-top: 0.5em;  /* Positive margin to create proper spacing from Student Success Center */
+		align-self: start; /* Keep alignment consistent */
 	}
 	
-	/* Position Quam neque phasellus (4th work-item, right column) lower */
+	/* Position Quam neque phasellus (4th work-item, right column) lower - ensure smooth movement */
 	#two .row > .work-item:nth-child(4) {
 		grid-column: 2;
-		margin-top: 1.6em; /* Move Quam neque phasellus down */
+		grid-row: 2; /* Explicitly set to row 2 */
+		margin-top: 2.0em; /* Move Quam neque phasellus down */
+		align-self: start; /* Keep alignment consistent - prevents stretching */
+		/* The grid row expansion will move this smoothly due to grid-auto-rows: min-content */
 	}
 	
 	.work-item {
 		margin: 0 0 2em 0;
+	}
+	
+	/* Add padding-bottom to Student Success Center work-item when tech stack is expanded to prevent overlap with Tortor */
+	#two .row > .work-item:first-child .tech-stack.expanded {
+		padding-bottom: 4em; /* Increased padding to create proper spacing and prevent overlap with Tortor */
 	}
 	
 	/* On mobile, make it single column - force one frame at a time */
@@ -2898,18 +2907,18 @@ input, select, textarea {
 			z-index: 1;
 			overscroll-behavior: contain;
 			-webkit-overflow-scrolling: touch;
-			-moz-transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), padding-bottom 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-			-webkit-transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), padding-bottom 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-			-ms-transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), padding-bottom 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-			transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), padding-bottom 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+			-moz-transition: max-height 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), padding-bottom 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+			-webkit-transition: max-height 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), padding-bottom 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+			-ms-transition: max-height 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), padding-bottom 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+			transition: max-height 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), padding-bottom 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 		}
 
 		.work-item .tech-stack {
 			position: relative;
-			-moz-transition: padding-bottom 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-			-webkit-transition: padding-bottom 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-			-ms-transition: padding-bottom 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-			transition: padding-bottom 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+			-moz-transition: padding-bottom 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+			-webkit-transition: padding-bottom 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+			-ms-transition: padding-bottom 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+			transition: padding-bottom 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 		}
 
 		.work-item .tech-stack-categories.expanded {
