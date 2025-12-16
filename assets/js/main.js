@@ -111,6 +111,8 @@
 					],
 					'diversifynance': [
 						{ type: 'image', src: 'images/thumbs/Diversifynance/Diversifynance_landing_page.png', alt: 'Landing Page' },
+						{ type: 'image', src: 'images/thumbs/Diversifynance/chatbot.png', alt: 'Chatbot' },
+						{ type: 'image', src: 'images/thumbs/Diversifynance/team_picture.png', alt: 'Team Picture' },
 						{ type: 'video', src: 'images/thumbs/Diversifynance/Diversifynance_demo.mp4', alt: 'Demo Video' }
 					]
 				};
@@ -380,7 +382,155 @@
 					var originalThumb = $img.attr('src');
 					var originalFull = $link.attr('href');
 					
-					// Skip shuffle for Student Success Center images (including Pathfinder)
+					// Check if this is Diversifynance project - add custom shuffle for its own images
+					var isDiversifynance = originalThumb.indexOf('Diversifynance') !== -1;
+					if (isDiversifynance) {
+						// Diversifynance images to cycle through (landing page always first)
+						var diversifynanceImages = [
+							{ thumb: 'images/thumbs/Diversifynance/Diversifynance_landing_page.png', full: 'images/thumbs/Diversifynance/Diversifynance_demo.mp4' },
+							{ thumb: 'images/thumbs/Diversifynance/chatbot.png', full: 'images/thumbs/Diversifynance/Diversifynance_demo.mp4' },
+							{ thumb: 'images/thumbs/Diversifynance/team_picture.png', full: 'images/thumbs/Diversifynance/Diversifynance_demo.mp4' }
+						];
+						
+						// Always use landing page as the original/starting image
+						var landingPageThumb = diversifynanceImages[0].thumb;
+						var landingPageFull = diversifynanceImages[0].full;
+						
+						// Ensure the image is set to landing page on page load
+						if (originalThumb !== landingPageThumb) {
+							$img.attr('src', landingPageThumb);
+							$link.attr('href', landingPageFull);
+							originalThumb = landingPageThumb;
+							originalFull = landingPageFull;
+						}
+						
+						// Always start from landing page (index 0) for shuffle
+						var currentShuffleIndex = 0;
+						
+						// Function to automatically shuffle to the next image with blur transition
+						function shuffleToNext() {
+							if (diversifynanceImages.length > 0) {
+								// Get current image and find its index
+								var currentSrc = $img.attr('src');
+								var foundIndex = 0;
+								for (var i = 0; i < diversifynanceImages.length; i++) {
+									if (diversifynanceImages[i].thumb === currentSrc) {
+										foundIndex = i;
+										break;
+									}
+								}
+								
+								// Update current index to match actual current image
+								currentShuffleIndex = foundIndex;
+								
+								// Calculate next index (cycle through all images: 0->1->2->0)
+								var nextIndex = (currentShuffleIndex + 1) % diversifynanceImages.length;
+								var nextImage = diversifynanceImages[nextIndex];
+								
+								// Update current index for next shuffle
+								currentShuffleIndex = nextIndex;
+								
+								// Blur the current image
+								$img.css({
+									'filter': 'blur(5px)',
+									'-webkit-filter': 'blur(5px)'
+								});
+								
+								// Change image source while blurred
+								setTimeout(function() {
+									$img.attr('src', nextImage.thumb);
+									
+									// Remove blur to reveal new image
+									setTimeout(function() {
+										$img.css({
+											'filter': 'blur(0px)',
+											'-webkit-filter': 'blur(0px)'
+										});
+									}, 50);
+								}, 500); // Half of transition time
+							}
+						}
+						
+						// Start automatic shuffling every 8 seconds continuously (regardless of hover)
+						// Start after initial delay to show landing page first
+						setTimeout(function() {
+							setInterval(shuffleToNext, 8000);
+						}, 8000);
+						
+						// Calculate next image for hover (cycle through Diversifynance images only, starting from landing page)
+						var nextIndex = (currentShuffleIndex + 1) % diversifynanceImages.length;
+						var nextThumb = diversifynanceImages[nextIndex].thumb;
+						var nextFull = diversifynanceImages[nextIndex].full;
+						
+						// Store original sources (always landing page)
+						$this.data('originalThumb', landingPageThumb);
+						$this.data('originalFull', landingPageFull);
+						$this.data('nextThumb', nextThumb);
+						$this.data('nextFull', nextFull);
+						
+						// Variables for touch handling
+						var touchStartTime = 0;
+						var touchTimeout = null;
+						var isTouching = false;
+						
+						// No hover functionality - images shuffle automatically
+						// Hover events removed so shuffle continues regardless of mouse position
+						
+						// Mobile: Touch start - show next image in sequence
+						$this.on('touchstart', function(e) {
+							isTouching = true;
+							touchStartTime = Date.now();
+							
+							// Get current image and find its index
+							var currentSrc = $img.attr('src');
+							var touchIndex = 0;
+							for (var i = 0; i < diversifynanceImages.length; i++) {
+								if (diversifynanceImages[i].thumb === currentSrc) {
+									touchIndex = i;
+									break;
+								}
+							}
+							// Show next image in sequence
+							var touchNextIndex = (touchIndex + 1) % diversifynanceImages.length;
+							$img.attr('src', diversifynanceImages[touchNextIndex].thumb);
+							
+							// Clear any existing timeout
+							if (touchTimeout) {
+								clearTimeout(touchTimeout);
+							}
+						});
+						
+						// Mobile: Touch end - let automatic shuffle continue
+						$this.on('touchend', function(e) {
+							var touchDuration = Date.now() - touchStartTime;
+							isTouching = false;
+							// Let automatic shuffle continue - don't interfere
+						});
+						
+						// Mobile: Touch cancel - let automatic shuffle continue
+						$this.on('touchcancel', function(e) {
+							isTouching = false;
+							if (touchTimeout) {
+								clearTimeout(touchTimeout);
+							}
+							// Let automatic shuffle continue
+						});
+						
+						// On click: open carousel (don't interfere with shuffle)
+						$link.on('click', function(e) {
+							$link.attr('href', landingPageFull);
+							isTouching = false;
+							if (touchTimeout) {
+								clearTimeout(touchTimeout);
+							}
+							// Let automatic shuffle continue
+						});
+						
+						// Don't continue with regular shuffle logic
+						return;
+					}
+					
+					// Skip shuffle for custom project images (Student Success Center, etc.)
 					var skipShuffle = originalThumb.indexOf('Student Success Center') !== -1 || 
 									  originalThumb.indexOf('01.jpg') !== -1;
 					
@@ -394,8 +544,9 @@
 					var nextThumb = imageSources[nextIndex].thumb;
 					var nextFull = imageSources[nextIndex].full;
 					
-					// Skip if next image is also a Student Success Center or 01.jpg
+					// Skip if next image is also a custom project image (Student Success Center, Diversifynance, or 01.jpg)
 					if (nextThumb.indexOf('Student Success Center') !== -1 || 
+						nextThumb.indexOf('Diversifynance') !== -1 ||
 						nextThumb.indexOf('01.jpg') !== -1) {
 						// Find the next valid image
 						var foundNext = false;
@@ -403,6 +554,7 @@
 							var checkIndex = (index + i) % imageSources.length;
 							var checkThumb = imageSources[checkIndex].thumb;
 							if (checkThumb.indexOf('Student Success Center') === -1 && 
+								checkThumb.indexOf('Diversifynance') === -1 &&
 								checkThumb.indexOf('01.jpg') === -1) {
 								nextThumb = checkThumb;
 								nextFull = imageSources[checkIndex].full;
