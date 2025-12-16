@@ -473,11 +473,18 @@
 						var touchTimeout = null;
 						var isTouching = false;
 						
+						// Get the image container (not the entire work-item)
+						var $imageContainer = $this.find('.image.thumb');
+						
 						// No hover functionality - images shuffle automatically
 						// Hover events removed so shuffle continues regardless of mouse position
 						
-						// Mobile: Touch start - show next image in sequence
-						$this.on('touchstart', function(e) {
+						// Mobile: Touch start - show next image in sequence (only on image container, not entire work-item)
+						$imageContainer.on('touchstart', function(e) {
+							// Only trigger if touching the image container itself, not child elements like icons
+							if ($(e.target).closest('.project-icon-link').length > 0) {
+								return;
+							}
 							isTouching = true;
 							touchStartTime = Date.now();
 							
@@ -500,15 +507,15 @@
 							}
 						});
 						
-						// Mobile: Touch end - let automatic shuffle continue
-						$this.on('touchend', function(e) {
+						// Mobile: Touch end - let automatic shuffle continue (only on image container)
+						$imageContainer.on('touchend', function(e) {
 							var touchDuration = Date.now() - touchStartTime;
 							isTouching = false;
 							// Let automatic shuffle continue - don't interfere
 						});
 						
-						// Mobile: Touch cancel - let automatic shuffle continue
-						$this.on('touchcancel', function(e) {
+						// Mobile: Touch cancel - let automatic shuffle continue (only on image container)
+						$imageContainer.on('touchcancel', function(e) {
 							isTouching = false;
 							if (touchTimeout) {
 								clearTimeout(touchTimeout);

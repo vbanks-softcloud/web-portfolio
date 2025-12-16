@@ -2604,7 +2604,7 @@ input, select, textarea {
 	
 	/* Position Quam neque phasellus (4th work-item) higher to match the same gap */
 	#two .row > .work-item:nth-child(4) {
-		margin-top: .5em;
+		margin-top: .3em;
 	}
 
 		.work-item .image {
