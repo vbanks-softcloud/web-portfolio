@@ -2593,18 +2593,35 @@ input, select, textarea {
 
 /* Work Item */
 
+	/* Use grid layout for projects section to handle content expansion properly */
+	#two .row {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		grid-auto-flow: row;
+		grid-auto-rows: min-content;
+		gap: 0.5em 2em;
+		align-items: start;
+	}
+	
+	/* Override col-6 width in projects section since we're using grid */
+	#two .row > .col-6 {
+		width: auto;
+	}
+	
+	/* Remove margins from work-items in grid - gap handles spacing */
+	#two .row > .work-item {
+		margin: 0;
+	}
+	
 	.work-item {
 		margin: 0 0 2em 0;
 	}
 	
-	/* Position Tortor metus commodo (3rd work-item) higher to reduce gap */
-	#two .row > .work-item:nth-child(3) {
-		margin-top: -3em;
-	}
-	
-	/* Position Quam neque phasellus (4th work-item) higher to match the same gap */
-	#two .row > .work-item:nth-child(4) {
-		margin-top: .3em;
+	/* On mobile, make it single column */
+	@media screen and (max-width: 480px) {
+		#two .row {
+			grid-template-columns: 1fr;
+		}
 	}
 
 		.work-item .image {
