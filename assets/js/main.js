@@ -479,49 +479,7 @@
 						// No hover functionality - images shuffle automatically
 						// Hover events removed so shuffle continues regardless of mouse position
 						
-						// Mobile: Touch start - show next image in sequence (only on image container, not entire work-item)
-						$imageContainer.on('touchstart', function(e) {
-							// Only trigger if touching the image container itself, not child elements like icons
-							if ($(e.target).closest('.project-icon-link').length > 0) {
-								return;
-							}
-							isTouching = true;
-							touchStartTime = Date.now();
-							
-							// Get current image and find its index
-							var currentSrc = $img.attr('src');
-							var touchIndex = 0;
-							for (var i = 0; i < diversifynanceImages.length; i++) {
-								if (diversifynanceImages[i].thumb === currentSrc) {
-									touchIndex = i;
-									break;
-								}
-							}
-							// Show next image in sequence
-							var touchNextIndex = (touchIndex + 1) % diversifynanceImages.length;
-							$img.attr('src', diversifynanceImages[touchNextIndex].thumb);
-							
-							// Clear any existing timeout
-							if (touchTimeout) {
-								clearTimeout(touchTimeout);
-							}
-						});
-						
-						// Mobile: Touch end - let automatic shuffle continue (only on image container)
-						$imageContainer.on('touchend', function(e) {
-							var touchDuration = Date.now() - touchStartTime;
-							isTouching = false;
-							// Let automatic shuffle continue - don't interfere
-						});
-						
-						// Mobile: Touch cancel - let automatic shuffle continue (only on image container)
-						$imageContainer.on('touchcancel', function(e) {
-							isTouching = false;
-							if (touchTimeout) {
-								clearTimeout(touchTimeout);
-							}
-							// Let automatic shuffle continue
-						});
+						// Mobile: No touch handlers - images only shuffle automatically, not on touch/press
 						
 						// On click: open carousel (don't interfere with shuffle)
 						$link.on('click', function(e) {
@@ -600,44 +558,7 @@
 						}
 					});
 					
-					// Mobile: Touch start - show next image
-					$this.on('touchstart', function(e) {
-						isTouching = true;
-						touchStartTime = Date.now();
-						$img.attr('src', nextThumb);
-						
-						// Clear any existing timeout
-						if (touchTimeout) {
-							clearTimeout(touchTimeout);
-						}
-					});
-					
-					// Mobile: Touch end - restore original image after delay
-					$this.on('touchend', function(e) {
-						var touchDuration = Date.now() - touchStartTime;
-						
-						// If it's a quick tap (less than 300ms), restore immediately for click
-						// Otherwise, restore after a short delay
-						if (touchDuration < 300) {
-							$img.attr('src', originalThumb);
-							isTouching = false;
-						} else {
-							// Longer touch - restore after delay
-							touchTimeout = setTimeout(function() {
-								$img.attr('src', originalThumb);
-								isTouching = false;
-							}, 300);
-						}
-					});
-					
-					// Mobile: Touch cancel - restore original image
-					$this.on('touchcancel', function(e) {
-						$img.attr('src', originalThumb);
-						isTouching = false;
-						if (touchTimeout) {
-							clearTimeout(touchTimeout);
-						}
-					});
+					// Mobile: No touch handlers - images only shuffle on hover (desktop), not on touch/press
 					
 					// On click: ensure original image is used (restore if hovered/touched)
 					$link.on('click', function(e) {

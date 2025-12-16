@@ -2616,7 +2616,7 @@ input, select, textarea {
 	/* Position Tortor metus commodo (3rd work-item, left column) lower */
 	#two .row > .work-item:nth-child(3) {
 		grid-column: 1;
-		margin-top: 0.5em;  /* Positive margin to create proper spacing from Student Success Center */
+		margin-top: -0.2em;  /* Negative margin to move Tortor metus commodo up */
 		align-self: start; /* Keep alignment consistent */
 	}
 	
