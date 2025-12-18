@@ -1,4 +1,4 @@
-name: Mirror Repository to Azure DevOps repository
+name: Mirror Repository to Azure DevOps
 
 on:
   push:
@@ -20,6 +20,7 @@ jobs:
         env:
           AZURE_PAT: ${{ secrets.AZURE_PAT }}
         run: |
+          git remote remove azure 2>/dev/null || true
           git remote add azure "https://vincecareer:${AZURE_PAT}@dev.azure.com/vincecareer/web-portfolio-backup/_git/web-portfolio-backup"
-          git push azure --all
-          git push azure --tags
+          git push azure --all --force
+          git push azure --tags --force

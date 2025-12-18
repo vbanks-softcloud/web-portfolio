@@ -2631,7 +2631,7 @@ input, select, textarea {
 	
 	/* Position Nunc enim commodo aliquet (5th work-item) lower */
 	#two .row > .work-item:nth-child(5) {
-		margin-top: 2.0em; /* Move Nunc enim commodo aliquet down */
+		margin-top: 2.3em; /* Move Nunc enim commodo aliquet down */
 		align-self: start; /* Keep alignment consistent */
 	}
 	
