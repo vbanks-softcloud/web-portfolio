@@ -114,6 +114,12 @@
 						{ type: 'image', src: 'images/thumbs/Diversifynance/chatbot.png', alt: 'Chatbot' },
 						{ type: 'image', src: 'images/thumbs/Diversifynance/team_picture.png', alt: 'Team Picture' },
 						{ type: 'video', src: 'images/thumbs/Diversifynance/Diversifynance_demo.mp4', alt: 'Demo Video' }
+					],
+					'uta-advance': [
+						{ type: 'image', src: 'images/thumbs/Uta_advance/Courses_page.png', alt: 'Courses Page' },
+						{ type: 'image', src: 'images/thumbs/Uta_advance/Uta_advance_landing_page.png', alt: 'Landing Page' },
+						{ type: 'image', src: 'images/thumbs/Uta_advance/utaadvance_login_page.png', alt: 'Login Page' },
+						{ type: 'image', src: 'images/thumbs/Uta_advance/gpa_calculator_page.png', alt: 'GPA Calculator Page' }
 					]
 				};
 
@@ -214,6 +220,8 @@
 							projectKey = 'student-success-center';
 						} else if (linkHref.indexOf('Diversifynance') !== -1) {
 							projectKey = 'diversifynance';
+						} else if (linkHref.indexOf('Uta_advance') !== -1 || linkHref.indexOf('Uta_advance') !== -1) {
+							projectKey = 'uta-advance';
 						}
 					}
 					
@@ -226,6 +234,8 @@
 								projectKey = 'student-success-center';
 							} else if (titleText.indexOf('diversifynance') !== -1) {
 								projectKey = 'diversifynance';
+							} else if (titleText.indexOf('uta advance') !== -1) {
+								projectKey = 'uta-advance';
 							}
 						}
 					}
@@ -495,8 +505,123 @@
 						return;
 					}
 					
-					// Skip shuffle for custom project images (Student Success Center, etc.)
+					// Check if this is UTA Advance project - add custom shuffle for its own images
+					var isUtaAdvance = originalThumb.indexOf('Uta_advance') !== -1;
+					if (isUtaAdvance) {
+						// UTA Advance images to cycle through (Courses page always first)
+						var utaAdvanceImages = [
+							{ thumb: 'images/thumbs/Uta_advance/Courses_page.png', full: 'images/thumbs/Uta_advance/Courses_page.png' },
+							{ thumb: 'images/thumbs/Uta_advance/Uta_advance_landing_page.png', full: 'images/thumbs/Uta_advance/Uta_advance_landing_page.png' },
+							{ thumb: 'images/thumbs/Uta_advance/utaadvance_login_page.png', full: 'images/thumbs/Uta_advance/utaadvance_login_page.png' },
+							{ thumb: 'images/thumbs/Uta_advance/gpa_calculator_page.png', full: 'images/thumbs/Uta_advance/gpa_calculator_page.png' }
+						];
+						
+						// Always use Courses page as the original/starting image
+						var coursesPageThumb = utaAdvanceImages[0].thumb;
+						var coursesPageFull = utaAdvanceImages[0].full;
+						
+						// Ensure the image is set to Courses page on page load
+						if (originalThumb !== coursesPageThumb) {
+							$img.attr('src', coursesPageThumb);
+							$link.attr('href', coursesPageFull);
+							originalThumb = coursesPageThumb;
+							originalFull = coursesPageFull;
+						}
+						
+						// Always start from Courses page (index 0) for shuffle
+						var currentShuffleIndex = 0;
+						
+						// Function to automatically shuffle to the next image with blur transition
+						function shuffleToNext() {
+							if (utaAdvanceImages.length > 0) {
+								// Get current image and find its index
+								var currentSrc = $img.attr('src');
+								var foundIndex = 0;
+								for (var i = 0; i < utaAdvanceImages.length; i++) {
+									if (utaAdvanceImages[i].thumb === currentSrc) {
+										foundIndex = i;
+										break;
+									}
+								}
+								
+								// Update current index to match actual current image
+								currentShuffleIndex = foundIndex;
+								
+								// Calculate next index (cycle through all images: 0->1->2->3->0)
+								var nextIndex = (currentShuffleIndex + 1) % utaAdvanceImages.length;
+								var nextImage = utaAdvanceImages[nextIndex];
+								
+								// Update current index for next shuffle
+								currentShuffleIndex = nextIndex;
+								
+								// Blur the current image
+								$img.css({
+									'filter': 'blur(5px)',
+									'-webkit-filter': 'blur(5px)'
+								});
+								
+								// Change image source while blurred
+								setTimeout(function() {
+									$img.attr('src', nextImage.thumb);
+									
+									// Remove blur to reveal new image
+									setTimeout(function() {
+										$img.css({
+											'filter': 'blur(0px)',
+											'-webkit-filter': 'blur(0px)'
+										});
+									}, 50);
+								}, 500); // Half of transition time
+							}
+						}
+						
+						// Start automatic shuffling every 8 seconds continuously (regardless of hover)
+						// Start after initial delay to show Courses page first
+						setTimeout(function() {
+							setInterval(shuffleToNext, 8000);
+						}, 8000);
+						
+						// Calculate next image for hover (cycle through UTA Advance images only, starting from Courses page)
+						var nextIndex = (currentShuffleIndex + 1) % utaAdvanceImages.length;
+						var nextThumb = utaAdvanceImages[nextIndex].thumb;
+						var nextFull = utaAdvanceImages[nextIndex].full;
+						
+						// Store original sources (always Courses page)
+						$this.data('originalThumb', coursesPageThumb);
+						$this.data('originalFull', coursesPageFull);
+						$this.data('nextThumb', nextThumb);
+						$this.data('nextFull', nextFull);
+						
+						// Variables for touch handling
+						var touchStartTime = 0;
+						var touchTimeout = null;
+						var isTouching = false;
+						
+						// Get the image container (not the entire work-item)
+						var $imageContainer = $this.find('.image.thumb');
+						
+						// No hover functionality - images shuffle automatically
+						// Hover events removed so shuffle continues regardless of mouse position
+						
+						// Mobile: No touch handlers - images only shuffle automatically, not on touch/press
+						
+						// On click: open carousel (don't interfere with shuffle)
+						$link.on('click', function(e) {
+							$link.attr('href', coursesPageFull);
+							isTouching = false;
+							if (touchTimeout) {
+								clearTimeout(touchTimeout);
+							}
+							// Let automatic shuffle continue
+						});
+						
+						// Don't continue with regular shuffle logic
+						return;
+					}
+					
+					// Skip shuffle for custom project images (Student Success Center, UTA Advance, etc.)
 					var skipShuffle = originalThumb.indexOf('Student Success Center') !== -1 || 
+									  originalThumb.indexOf('Uta_advance') !== -1 ||
 									  originalThumb.indexOf('01.jpg') !== -1;
 					
 					if (skipShuffle) {
@@ -509,9 +634,10 @@
 					var nextThumb = imageSources[nextIndex].thumb;
 					var nextFull = imageSources[nextIndex].full;
 					
-					// Skip if next image is also a custom project image (Student Success Center, Diversifynance, or 01.jpg)
+					// Skip if next image is also a custom project image (Student Success Center, Diversifynance, UTA Advance, or 01.jpg)
 					if (nextThumb.indexOf('Student Success Center') !== -1 || 
 						nextThumb.indexOf('Diversifynance') !== -1 ||
+						nextThumb.indexOf('Uta_advance') !== -1 ||
 						nextThumb.indexOf('01.jpg') !== -1) {
 						// Find the next valid image
 						var foundNext = false;
@@ -520,6 +646,7 @@
 							var checkThumb = imageSources[checkIndex].thumb;
 							if (checkThumb.indexOf('Student Success Center') === -1 && 
 								checkThumb.indexOf('Diversifynance') === -1 &&
+								checkThumb.indexOf('Uta_advance') === -1 &&
 								checkThumb.indexOf('01.jpg') === -1) {
 								nextThumb = checkThumb;
 								nextFull = imageSources[checkIndex].full;
