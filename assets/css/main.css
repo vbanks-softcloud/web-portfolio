@@ -2629,6 +2629,12 @@ input, select, textarea {
 		/* The grid row expansion will move this smoothly due to grid-auto-rows: min-content */
 	}
 	
+	/* Position Nunc enim commodo aliquet (5th work-item) lower */
+	#two .row > .work-item:nth-child(5) {
+		margin-top: 2.0em; /* Move Nunc enim commodo aliquet down */
+		align-self: start; /* Keep alignment consistent */
+	}
+	
 	.work-item {
 		margin: 0 0 2em 0;
 	}
