@@ -2620,11 +2620,11 @@ input, select, textarea {
 		align-self: start; /* Keep alignment consistent */
 	}
 	
-	/* Position Quam neque phasellus (4th work-item, right column) lower - ensure smooth movement */
+	/* Position For You, Not for All (4th work-item, right column) lower - ensure smooth movement */
 	#two .row > .work-item:nth-child(4) {
 		grid-column: 2;
 		grid-row: 2; /* Explicitly set to row 2 */
-		margin-top: 2.0em; /* Move Quam neque phasellus down */
+		margin-top: 2.0em; /* Move For You, Not for All down */
 		align-self: start; /* Keep alignment consistent - prevents stretching */
 		/* The grid row expansion will move this smoothly due to grid-auto-rows: min-content */
 	}

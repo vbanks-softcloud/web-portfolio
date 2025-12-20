@@ -111,6 +111,8 @@
 					],
 					'diversifynance': [
 						{ type: 'image', src: 'images/thumbs/Diversifynance/Diversifynance_landing_page.png', alt: 'Landing Page' },
+						{ type: 'image', src: 'images/thumbs/Diversifynance/Diversifynance_Spanish_landing_page.png', alt: 'Spanish Landing Page' },
+						{ type: 'image', src: 'images/thumbs/Diversifynance/companies.png', alt: 'Companies' },
 						{ type: 'image', src: 'images/thumbs/Diversifynance/chatbot.png', alt: 'Chatbot' },
 						{ type: 'image', src: 'images/thumbs/Diversifynance/team_picture.png', alt: 'Team Picture' },
 						{ type: 'video', src: 'images/thumbs/Diversifynance/Diversifynance_demo.mp4', alt: 'Demo Video' }
@@ -120,6 +122,10 @@
 						{ type: 'image', src: 'images/thumbs/Uta_advance/Uta_advance_landing_page.png', alt: 'Landing Page' },
 						{ type: 'image', src: 'images/thumbs/Uta_advance/utaadvance_login_page.png', alt: 'Login Page' },
 						{ type: 'image', src: 'images/thumbs/Uta_advance/gpa_calculator_page.png', alt: 'GPA Calculator Page' }
+					],
+					'for-you-not-for-all': [
+						{ type: 'image', src: 'images/thumbs/For You, Not For All/game_ss.png', alt: 'Game Screenshot' },
+						{ type: 'video', src: 'images/thumbs/For You, Not For All/game_demo.mp4', alt: 'Game Demo' }
 					]
 				};
 
@@ -222,6 +228,8 @@
 							projectKey = 'diversifynance';
 						} else if (linkHref.indexOf('Uta_advance') !== -1 || linkHref.indexOf('Uta_advance') !== -1) {
 							projectKey = 'uta-advance';
+						} else if (linkHref.indexOf('For You, Not For All') !== -1) {
+							projectKey = 'for-you-not-for-all';
 						}
 					}
 					
@@ -236,6 +244,8 @@
 								projectKey = 'diversifynance';
 							} else if (titleText.indexOf('uta advance') !== -1) {
 								projectKey = 'uta-advance';
+							} else if (titleText.indexOf('for you, not for all') !== -1) {
+								projectKey = 'for-you-not-for-all';
 							}
 						}
 					}
@@ -398,6 +408,8 @@
 						// Diversifynance images to cycle through (landing page always first)
 						var diversifynanceImages = [
 							{ thumb: 'images/thumbs/Diversifynance/Diversifynance_landing_page.png', full: 'images/thumbs/Diversifynance/Diversifynance_demo.mp4' },
+							{ thumb: 'images/thumbs/Diversifynance/Diversifynance_Spanish_landing_page.png', full: 'images/thumbs/Diversifynance/Diversifynance_demo.mp4' },
+							{ thumb: 'images/thumbs/Diversifynance/companies.png', full: 'images/thumbs/Diversifynance/Diversifynance_demo.mp4' },
 							{ thumb: 'images/thumbs/Diversifynance/chatbot.png', full: 'images/thumbs/Diversifynance/Diversifynance_demo.mp4' },
 							{ thumb: 'images/thumbs/Diversifynance/team_picture.png', full: 'images/thumbs/Diversifynance/Diversifynance_demo.mp4' }
 						];
@@ -619,9 +631,10 @@
 						return;
 					}
 					
-					// Skip shuffle for custom project images (Student Success Center, UTA Advance, etc.)
+					// Skip shuffle for custom project images (Student Success Center, UTA Advance, For You Not For All, etc.)
 					var skipShuffle = originalThumb.indexOf('Student Success Center') !== -1 || 
 									  originalThumb.indexOf('Uta_advance') !== -1 ||
+									  originalThumb.indexOf('For You, Not For All') !== -1 ||
 									  originalThumb.indexOf('01.jpg') !== -1;
 					
 					if (skipShuffle) {
@@ -634,10 +647,11 @@
 					var nextThumb = imageSources[nextIndex].thumb;
 					var nextFull = imageSources[nextIndex].full;
 					
-					// Skip if next image is also a custom project image (Student Success Center, Diversifynance, UTA Advance, or 01.jpg)
+					// Skip if next image is also a custom project image (Student Success Center, Diversifynance, UTA Advance, For You Not For All, or 01.jpg)
 					if (nextThumb.indexOf('Student Success Center') !== -1 || 
 						nextThumb.indexOf('Diversifynance') !== -1 ||
 						nextThumb.indexOf('Uta_advance') !== -1 ||
+						nextThumb.indexOf('For You, Not For All') !== -1 ||
 						nextThumb.indexOf('01.jpg') !== -1) {
 						// Find the next valid image
 						var foundNext = false;
@@ -647,6 +661,7 @@
 							if (checkThumb.indexOf('Student Success Center') === -1 && 
 								checkThumb.indexOf('Diversifynance') === -1 &&
 								checkThumb.indexOf('Uta_advance') === -1 &&
+								checkThumb.indexOf('For You, Not For All') === -1 &&
 								checkThumb.indexOf('01.jpg') === -1) {
 								nextThumb = checkThumb;
 								nextFull = imageSources[checkIndex].full;
